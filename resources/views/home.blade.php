@@ -21,25 +21,40 @@
 			$(document).ready(function() {
 				$('#myTable').DataTable();
 			} );
-/*
-			$(document).ready(function() {
-				$('#myTable2').DataTable();
-			} );
-*/
+			
+            $( document ).on( "click", function( event ) {
+               /*
+                    Function change status when click on "done" button from done to undone and vice versa.
+               */
+               
+               var bid = event.target.id; // button ID 
+               var trid = $(event.target).closest('tr').attr('id'); // table row ID 
+               console.log(bid,trid);
+               
+             });
+            
 		</script>
 	</head>
     <body>
         <table id="myTable" class="table table-striped table-bordered" style="width:80%; font-size:18px;">
             <thead style="position:sticky; top:0px; border-collapse:collapsed; background:#fff;">
-                <th>Treść</th>
+                <th>Content</th>
                 <th>Status</th>
                 <th></th>
             </thead>
             <tbody>
             @for ($i = 0; $i < 100; $i++)
-                <tr>
-                    <td>tresc zadania{{$i}}</td>
-                    <td><input type="checkbox" name="status" value="" style="font-color:red;"></td>
+                <tr id="row_{{$i}}">
+                    <td>Content of task{{$i}}</td>
+                    <td><h5><img src="{{asset('icons/checked.png')}}"/> done</h5> <!-- <input type="checkbox" name="status" value="" style="font-color:red;" checked="true"> --></td>
+                    <td>
+                        <button id="done" class="btn btn-outline-primary" style="margin:10px;">Done</button>
+                        <button id="delete" class="btn btn-outline-primary" style="margin:10px;">Delete</button>
+                    </td>
+                </tr>
+                <tr id="row_{{$i}}">
+                    <td>Content of task{{$i}}</td>
+                    <td><h5> <img src="{{asset('icons/unchecked.png')}}"> undone</h5><!--<input type="checkbox" name="status" value="" style="font-color:red;" checked="false">--></td>
                     <td>
                         <button id="done" class="btn btn-outline-primary" style="margin:10px;">Done</button>
                         <button id="delete" class="btn btn-outline-primary" style="margin:10px;">Delete</button>
