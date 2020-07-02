@@ -1,0 +1,11 @@
+html, body { height: 100%; }
+body { overflow-y:hidden; }
+.tableFixHead          { overflow-y: auto; height: 100vh; }
+.tableFixHead thead th { position: sticky; top: 0; height: 10px; }
+
+/* Just common table stuff. Really. */
+table  { border-collapse: collapse; overflow-x:auto; width: 100%; }
+th, td { padding: 8px 16px; }
+th     { background:#eee; }
+.linki { position:absolute; top: 0; z-index:3; }
+.row { margin: 0; padding: 0 }
