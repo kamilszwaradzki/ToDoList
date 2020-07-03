@@ -38,16 +38,16 @@
                 <tr id="row_{{$i}}">
                     <td>{{$i}}</td>
                     <td>Content of task</td>
-                    <td><h5 id="status_{{$i}}"><img src="{{asset('icons/checked.png')}}"/> done</h5> <!-- <input type="checkbox" name="status" value="" style="font-color:red;" checked="true"> --></td>
+                    <td><h5 id="status_{{$i}}"><img src="{{asset('icons/checked.png')}}"/> done</h5></td>
                     <td>
-                        <button id="done" class="btn btn-outline-primary" style="margin:10px;">Done</button>
+                        <input id="done" type="checkbox" checked="true" /><label for="done">&nbsp;done</label>
                     </td>
                 </tr>
             @endfor
             </tbody>
         </table>
         <script>
-        $("button").click( function(){
+        $("input").click( function(){
         /*
             Function change status when click on "done" button from done to undone and vice versa.
         */
