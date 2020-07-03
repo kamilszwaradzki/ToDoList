@@ -46,25 +46,21 @@
             @endfor
             </tbody>
         </table>
-        <script>
-        $("input").click( function(){
-        /*
-            Function change status when click on "done" button from done to undone and vice versa.
-        */
-            var bid = event.target.id; // button ID 
-            var trid = $(event.target).closest('tr').attr('id'); // table row ID 
-            console.log(bid,trid);
-            if($("#"+trid.replace("row_","status_")).text().includes("done"))
-            {
-                $("#"+trid.replace("row_","status_")).replaceWith("<h5 id='"+trid.replace("row_","status_")+"'><img src='/icons/unchecked2.png'/> unfinished</h5>");
-            }
-            else{
-                $("#"+trid.replace("row_","status_")).replaceWith("<h5 id='"+trid.replace("row_","status_")+"'><img src='/icons/checked.png'/> done</h5>");
-            }
-            console.log($("#"+trid.replace("row_","status_")).text());
+    <script>
+        $("input").on('change', function() {
+
+        var trid = $(event.target).closest('tr').attr('id'); // table row ID 
+
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            $("#"+trid.replace("row_","status_")).replaceWith("<h5 id='"+trid.replace("row_","status_")+"'><img src='/icons/checked.png'/> done</h5>");
+        } else {
+            $(this).attr('value', 'false');
+            $("#"+trid.replace("row_","status_")).replaceWith("<h5 id='"+trid.replace("row_","status_")+"'><img src='/icons/unchecked2.png'/> unfinished</h5>");
+        }
+         console.log($("#"+trid.replace("row_","status_")).text());
         
         });
-
     </script>
 
     </body>
