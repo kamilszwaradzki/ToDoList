@@ -13,8 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'TaskController@create');
 Route::get('index','TaskController@index');
-Route::get('create', 'TaskController@create');
