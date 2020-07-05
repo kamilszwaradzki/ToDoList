@@ -3,4 +3,4 @@
 The program allows you to manage the list of tasks. It's a simple CRUD.
 
 ## Screenshot
-![image](http://i.imgur.com/jL1Pidh.png)
+![image](http://i.imgur.com/X7gFwbu.png)
