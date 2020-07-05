@@ -2,66 +2,46 @@
 <html>
 <head>
 		<meta name="csrf-token" content="{{ csrf_token() }}">
-		<script type="text/javascript" charset="utf8" src="{{asset('js/jquery-3.3.1.slim.min.js')}}"></script>
-			
-		<link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
-		<link rel="stylesheet" type="text/css" href="{{asset('DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css')}}">
+		<script type="text/javascript" charset="utf8" src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
 
-		<script type="text/javascript" charset="utf8" src="{{asset('DataTables/DataTables-1.10.18/js/jquery.dataTables.js')}}"></script>
-		<script type="text/javascript" charset="utf8" src="{{asset('DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js')}}"></script>
+		<link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
 		<script type="text/javascript" charset="utf8" src="{{asset('js/popper.min.js')}}" ></script>
 		<script type="text/javascript" charset="utf8" src="{{asset('js/bootstrap.min.js')}}" ></script>
-
-        <script>
-		
-        $('a[data-toggle="tab"]').on( 'shown.bs.tab', function (e) {
-            $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
-        } );
-     
-        $(document).ready(function() {
-            $('#myTable').DataTable();
-        } );
         
-</script>
-
+        <!-- Tabulator sources below: -->
+        <link href="{{asset('tabulator-master/dist/css/tabulator.min.css')}}" rel="stylesheet">
+        <script type="text/javascript" src="{{asset('tabulator-master/dist/js/tabulator.min.js')}}"></script>
 	</head>
     <body>
-        <table id="myTable" class="table table-striped table-bordered" style="width:80%; font-size:18px;">
-            <thead style="position:sticky; top:0px; border-collapse:collapsed; background:#fff;">
-                <th>Id</th>
-                <th>Content</th>
-                <th>Status</th>
-                <th>Control buttons</th>
-            </thead>
-            <tbody>
-            @for ($i = 0; $i < 100; $i++)
-                <tr id="row_{{$i}}">
-                    <td>{{$i}}</td>
-                    <td>Content of task</td>
-                    <td><h5 id="status_{{$i}}"><img src="{{asset('icons/checked.png')}}"/> done</h5></td>
-                    <td>
-                        <input id="done" type="checkbox" checked="true" /><label for="done">&nbsp;done</label>
-                    </td>
-                </tr>
-            @endfor
-            </tbody>
-        </table>
-    <script>
-        $("input").on('change', function() {
+        <div id="myTable"> </div>
+        <script>
+            var table = new Tabulator("#myTable", {
+                layout:"fitColumns",      //fit columns to width of table
+                responsiveLayout:"hide",  //hide columns that dont fit on the table
+                tooltips:true,            //show tool tips on cells
+                addRowPos:"top",          //when adding a new row, add it to the top of the table
+                history:true,             //allow undo and redo actions on the table
+                pagination:"local",       //paginate the data
+                paginationSize:7,         //allow 7 rows per page of data
+                movableColumns:true,      //allow column order to be changed
+                resizableRows:true,       //allow row order to be changed
+                ajaxURL:"{{ url('index')}}", //ajax URL
+                ajaxConfig:"get", //ajax HTTP request type
+                ajaxResponse:function(url, params, response){
+                    //url - the URL of the request
+                    //params - the parameters passed with the request
+                    //response - the JSON object returned in the body of the response.
 
-        var trid = $(event.target).closest('tr').attr('id'); // table row ID 
-
-        if ($(this).is(':checked')) {
-            $(this).attr('value', 'true');
-            $("#"+trid.replace("row_","status_")).replaceWith("<h5 id='"+trid.replace("row_","status_")+"'><img src='/icons/checked.png'/> done</h5>");
-        } else {
-            $(this).attr('value', 'false');
-            $("#"+trid.replace("row_","status_")).replaceWith("<h5 id='"+trid.replace("row_","status_")+"'><img src='/icons/unchecked2.png'/> unfinished</h5>");
-        }
-         console.log($("#"+trid.replace("row_","status_")).text());
-        
-        });
-    </script>
+                    return response.data; //return the data property of a response json object
+                },
+                columns: [
+                            { title: 'Id',      field: 'id',      width: "10%" },
+                            { title: 'Content', field: 'content', width: "80%" },
+                            { title: 'Status',  field: 'status',  width: "10%",formatter:"tickCross", sorter:"boolean",editor:true }
+                        ]
+                });
+        </script>
 
     </body>
     
