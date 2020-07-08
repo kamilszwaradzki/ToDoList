@@ -15,7 +15,8 @@
 	</head>
     <body>
         <div id="myTable"> </div>
-        <input class="btn-submit btn-outline-secondary" type="submit" value="Send data to DB" name="dane2" id = "dane2" />
+
+        <input class="btn-submit btn-outline-secondary" type="submit" value="Send data to DB" name="sendToDB" id = "sendToDB" style="margin-left: 25px;"/>
         
         <script>
             var table = new Tabulator("#myTable", {
