@@ -10,11 +10,13 @@
 		<script type="text/javascript" charset="utf8" src="{{asset('js/bootstrap.min.js')}}" ></script>
         
         <!-- Tabulator sources below: -->
-        <link href="{{asset('tabulator-master/dist/css/tabulator.min.css')}}" rel="stylesheet">
+        <link href="{{asset('tabulator-master/dist/css/semantic-ui/tabulator_semantic-ui.min.css')}}" rel="stylesheet">
         <script type="text/javascript" src="{{asset('tabulator-master/dist/js/tabulator.min.js')}}"></script>
 	</head>
     <body>
         <div id="myTable"> </div>
+        <input class="btn-submit btn-outline-secondary" type="submit" value="Send data to DB" name="dane2" id = "dane2" />
+        
         <script>
             var table = new Tabulator("#myTable", {
                 layout:"fitColumns",      //fit columns to width of table
@@ -40,6 +42,39 @@
                             { title: 'Content', field: 'content', width: "80%" },
                             { title: 'Status',  field: 'status',  width: "10%",formatter:"tickCross", sorter:"boolean",editor:true }
                         ]
+                });
+
+                $(".btn-submit").click(function(e){
+
+                    e.preventDefault();
+
+                    $( "p" ).empty();
+                    $( "p" ).append('<div class="progress"> <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div><h2 style="font-family:arial;position:60%;"> Trwa ładowanie wyników z bazy</h2>');
+                    $( "p" ).show();
+                    var t = table.getData();
+                    $.ajax({
+
+                        type:'GET',
+                        url:'/data/',
+                        data:{table:t},
+
+                        complete: function(data){
+                            $("p").hide();
+
+                            if( !data.responseText.includes('HTTP'))
+                            {
+                                $( "p" ).empty();
+                                $( "p" ).append(data.responseText);
+                                $( "p" ).show();
+                            }
+                            else{
+                                window.location.replace('/');
+                            }
+                        }
+
+                    });
+
+
                 });
         </script>
 

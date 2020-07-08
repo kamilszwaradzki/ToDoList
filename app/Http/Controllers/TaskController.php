@@ -16,4 +16,26 @@ class TaskController extends Controller
     {
         return view('home');
     }
+    public function store(Request $request)
+    {
+
+        $array = $request->get('table');
+
+    
+        foreach($array as $ar)
+        {
+            DB::table('tasks')->updateOrInsert(
+                [
+                    'id' => $ar['id'],
+                ],
+                [
+                    'content' => $ar['content'],
+                    'status' => $ar['status'] === "true" ? 1: $ar['status'] === '1'? 1 : 0
+                ]
+            );
+        }
+        
+    return view('home');
+
+    }
 }

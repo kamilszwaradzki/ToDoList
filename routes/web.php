@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'TaskController@create');
 Route::get('index','TaskController@index');
+Route::get('data','TaskController@store');
