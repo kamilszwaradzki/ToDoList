@@ -12,12 +12,38 @@
         <!-- Tabulator sources below: -->
         <link href="{{asset('tabulator-master/dist/css/semantic-ui/tabulator_semantic-ui.min.css')}}" rel="stylesheet">
         <script type="text/javascript" src="{{asset('tabulator-master/dist/js/tabulator.min.js')}}"></script>
+
+        <!-- Semantic UI sources below -->
+        <link href="{{asset('Semantic-UI-CSS-master/semantic.min.css')}}" rel="stylesheet">
+        <!-- <script type="text/javascript" src="{{asset('Semantic-UI-CSS-master/semantic.min.js')}}"></script>-->
+
 	</head>
     <body>
+    <div class="main ui container">
         <div id="myTable"> </div>
+        <input class="ui button" type="submit" value="Send data to DB" name="sendToDB" id = "sendToDB" style="margin-left: 25px;"/>
+        <button class="ui button" type="button" name="addRow" id="addRow">add Data to Row</button>
 
-        <input class="btn-submit btn-outline-secondary" type="submit" value="Send data to DB" name="sendToDB" id = "sendToDB" style="margin-left: 25px;"/>
-        
+        <div class="main ui container" >
+            <div class="ui form" style="display: none;" id="myForm">
+                <div class="field">
+                    <label>Id</label>
+                    <span id="id" class="hidden"></span>
+                </div>
+                <div class="field">
+                    <label>Content</label>
+                    <input type="text" id="contentText" placeholder="Content Task...">
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" tabindex="0" id="statusTask" />
+                        <label>Task status</label>
+                    </div>
+                </div>
+                <button class="ui button" id="addDataToRow">add Data to Row</button>
+            </div>
+        </div>
+        </div>
         <script>
             var table = new Tabulator("#myTable", {
                 layout:"fitColumns",      //fit columns to width of table
@@ -44,8 +70,39 @@
                             { title: 'Status',  field: 'status',  width: "10%",formatter:"tickCross", sorter:"boolean",editor:true }
                         ]
                 });
+                $("#addDataToRow").click(function(e){
+                    var myId=Number($("#id").text());
+                    var myContent=$("#contentText").val();
+                    var myStatus=$("#statusTask").is(":checked")?1:0;
+                    table.addRow({id:myId, content:myContent, status:myStatus, height:1}, false);
+                });
 
-                $(".btn-submit").click(function(e){
+                $("#addRow").click(function(e){
+                    if($("#myForm").is( ":hidden" ))
+                    {
+                        $( "#myForm" ).show();
+                        $( "#addRow" ).text( "Hide Form" );
+                        $( "#addRow" ).removeClass( "ui button" ).addClass( "ui active button" );
+                      
+                        var columnId = table.getColumn("id")._column;
+                        var max = columnId.cells[0].value;
+                        for(var i = 0; i < columnId.cells.length; i++)
+                        {
+                            if(columnId.cells[i].value > max)
+                                {
+                                    max = columnId.cells[i].value;
+                                }
+                        }
+                        $( "#id" ).text(Number(max)+1);                             
+                    }
+                    else{
+                        $( "#myForm" ).hide();
+                        $( "#addRow" ).text( "add Data to Row" );
+                        $( "#addRow" ).removeClass( "ui active button" ).addClass( "ui button" );
+                    }
+
+                });
+                $("#sendToDB").click(function(e){
 
                     e.preventDefault();
 
