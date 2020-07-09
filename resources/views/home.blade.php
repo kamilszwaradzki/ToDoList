@@ -19,29 +19,43 @@
 
 	</head>
     <body>
+        <br>
     <div class="main ui container">
+    <div class="ui segment">
+            <div class="ui fluid form" >
+            <h4 class="ui header">
+            ToDoList
+          </h4>
         <div id="myTable"> </div>
-        <input class="ui button" type="submit" value="Send data to DB" name="sendToDB" id = "sendToDB" style="margin-left: 25px;"/>
-        <button class="ui button" type="button" name="addRow" id="addRow">add Data to Row</button>
-
-        <div class="main ui container" >
-            <div class="ui form" style="display: none;" id="myForm">
-                <div class="field">
-                    <label>Id</label>
-                    <span id="id" class="hidden"></span>
-                </div>
-                <div class="field">
-                    <label>Content</label>
-                    <input type="text" id="contentText" placeholder="Content Task...">
-                </div>
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" tabindex="0" id="statusTask" />
-                        <label>Task status</label>
+        <div class="three fields">
+            <input class="ui button" type="submit" value="Send data to DB" name="sendToDB" id = "sendToDB" style="margin-left: 25px;"/>
+            <button class="ui button" type="button" name="addRow" id="addRow">Add Data to Row</button>
+            <button class="ui button" type="button" name="deleteRow" id="deleteRow">Delete Selected Row</button>
+        </div>
+            <div class="main ui container" >
+                <div class="ui segment" style="display: none;" id="myForm">
+                    <div class="ui fluid form" >
+                        <div class="ui form" >
+                            <div class="field">
+                                <label>Id</label>
+                                <span id="id" class="hidden"></span>
+                            </div>
+                            <div class="field">
+                                <label>Content</label>
+                                <input type="text" id="contentText" placeholder="Content Task...">
+                            </div>
+                            <div class="field">
+                                <div class="ui checkbox">
+                                    <input type="checkbox" tabindex="0" id="statusTask" />
+                                    <label>Task status</label>
+                                </div>
+                            </div>
+                            <button class="ui button" id="addDataToRow">Add Data to Row</button>
+                        </div>
                     </div>
                 </div>
-                <button class="ui button" id="addDataToRow">add Data to Row</button>
             </div>
+        </div>
         </div>
         </div>
         <script>
@@ -55,6 +69,7 @@
                 paginationSize:7,         //allow 7 rows per page of data
                 movableColumns:true,      //allow column order to be changed
                 resizableRows:true,       //allow row order to be changed
+                selectable:true,
                 ajaxURL:"{{ url('index')}}", //ajax URL
                 ajaxConfig:"get", //ajax HTTP request type
                 ajaxResponse:function(url, params, response){
@@ -97,11 +112,14 @@
                     }
                     else{
                         $( "#myForm" ).hide();
-                        $( "#addRow" ).text( "add Data to Row" );
+                        $( "#addRow" ).text( "Add Data to Row" );
                         $( "#addRow" ).removeClass( "ui active button" ).addClass( "ui button" );
                     }
 
                 });
+                $("#deleteRow").click(function(e){
+                    table.deleteRow(table.getSelectedData().map(x => [x.id]).flat());
+                })
                 $("#sendToDB").click(function(e){
 
                     e.preventDefault();
