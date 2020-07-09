@@ -80,8 +80,8 @@
                     return response.data; //return the data property of a response json object
                 },
                 columns: [
-                            { title: 'Id',      field: 'id',      width: "10%" },
-                            { title: 'Content', field: 'content', width: "80%" },
+                            //{ title: 'Id',      field: 'id',      width: "10%" },
+                            { title: 'Content', field: 'content', width: "90%" },
                             { title: 'Status',  field: 'status',  width: "10%",formatter:"tickCross", sorter:"boolean",editor:true }
                         ]
                 });
@@ -98,17 +98,7 @@
                         $( "#myForm" ).show();
                         $( "#addRow" ).text( "Hide Form" );
                         $( "#addRow" ).removeClass( "ui button" ).addClass( "ui active button" );
-                      
-                        var columnId = table.getColumn("id")._column;
-                        var max = columnId.cells[0].value;
-                        for(var i = 0; i < columnId.cells.length; i++)
-                        {
-                            if(columnId.cells[i].value > max)
-                                {
-                                    max = columnId.cells[i].value;
-                                }
-                        }
-                        $( "#id" ).text(Number(max)+1);                             
+                        $( "#id" ).text(Math.max(...table.getData().map(x => [x.id]).flat())+1);
                     }
                     else{
                         $( "#myForm" ).hide();
