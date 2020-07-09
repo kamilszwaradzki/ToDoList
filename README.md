@@ -3,7 +3,7 @@
 The program allows you to manage the list of tasks. It's a simple CRUD.
 
 ## Screenshot
-![image](http://i.imgur.com/zN7eymW.png)
+![image](http://i.imgur.com/jwLeuil.png)
 
-### When clicked 'add Data to Row' button:
-![image](http://i.imgur.com/Mum0W8k.png)
+### When clicked 'Add Data to Row' button:
+![image](http://i.imgur.com/OEdA43O.png)
