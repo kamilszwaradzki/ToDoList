@@ -90,6 +90,7 @@
                     var myContent=$("#contentText").val();
                     var myStatus=$("#statusTask").is(":checked")?1:0;
                     table.addRow({id:myId, content:myContent, status:myStatus, height:1}, false);
+                    $( "#id" ).text(table.getData().map(x => [x.id]).flat().length?Math.max(...table.getData().map(x => [x.id]).flat())+1:1);
                 });
 
                 $("#addRow").click(function(e){
@@ -98,7 +99,7 @@
                         $( "#myForm" ).show();
                         $( "#addRow" ).text( "Hide Form" );
                         $( "#addRow" ).removeClass( "ui button" ).addClass( "ui active button" );
-                        $( "#id" ).text(Math.max(...table.getData().map(x => [x.id]).flat())+1);
+                        $( "#id" ).text(table.getData().map(x => [x.id]).flat().length?Math.max(...table.getData().map(x => [x.id]).flat())+1:1);
                     }
                     else{
                         $( "#myForm" ).hide();
