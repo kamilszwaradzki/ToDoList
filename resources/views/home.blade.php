@@ -1,6 +1,7 @@
 
 <html>
 <head>
+        <title>ToDoList</title>
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 		<script type="text/javascript" charset="utf8" src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
         <script type="text/javascript" src="{{asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
