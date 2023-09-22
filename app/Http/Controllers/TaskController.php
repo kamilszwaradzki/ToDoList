@@ -30,7 +30,7 @@ class TaskController extends Controller
                 ],
                 [
                     'content' => $ar['content'],
-                    'status' => $ar['status'] === "true" ? 1: $ar['status'] === '1'? 1 : 0
+                    'status' => ($ar['status'] === "true" ? 1 : ($ar['status'] === '1' ? 1 : 0))
                 ]
             );
         }
